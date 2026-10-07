@@ -1,10 +1,9 @@
-export default async function Home() {
-  // fetch
+import { SummarizeForm } from "./summarize-form";
 
-  // return
+export default function Home() {
   return (
-    <>
-      <h1 className="text-red text-2xl font-bold">Page</h1>
-    </>
+    <main className="bg-background text-foreground min-h-screen py-10">
+      <SummarizeForm />
+    </main>
   );
 }

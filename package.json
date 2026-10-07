@@ -11,8 +11,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/gateway": "^4.0.106",
+    "@vercel/connect": "2.2.0",
+    "ai": "^7.0.105",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "eve": "^0.71.2",
     "lucide-react": "^0.561.0",
     "next": "16.3.2",
     "pino": "^10.1.0",
@@ -20,9 +24,6 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "tailwind-merge": "^3.4.0",
-    "@vercel/connect": "2.2.0",
-    "ai": "^7.0.105",
-    "eve": "^0.71.2",
     "zod": "4.5.4"
   },
   "devDependencies": {
