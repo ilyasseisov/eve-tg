@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:ui": "eve dev",
+    "webhook:telegram": "bash scripts/set-telegram-webhook.sh",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
