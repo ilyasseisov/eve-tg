@@ -29,11 +29,12 @@ async function notifyFailedStep(url: string, errorMessage: string) {
 
 export default defineWorkflowTool({
   description:
-    "Scrape a URL with Tavily, summarize the content, notify Telegram, and return the summary.",
+    "Scrape a URL with Tavily, summarize the content, optionally notify Telegram proactively, and return the summary.",
   inputSchema: z.object({
     url: z.url(),
+    notifyTelegram: z.boolean().optional().default(true),
   }),
-  async *execute({ url }, _ctx) {
+  async *execute({ url, notifyTelegram }, _ctx) {
     "use workflow";
 
     try {
@@ -43,16 +44,20 @@ export default defineWorkflowTool({
       yield { phase: "summarizing" as const };
       const summary = await summarizeStep(url, markdown);
 
-      yield { phase: "notifying" as const };
-      await notifyCompletedStep(url, summary);
+      if (notifyTelegram) {
+        yield { phase: "notifying" as const };
+        await notifyCompletedStep(url, summary);
+      }
 
       return { status: "completed" as const, url, summary };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      try {
-        await notifyFailedStep(url, message);
-      } catch {
-        // Best-effort failure notification; still return failed status to the UI.
+      if (notifyTelegram) {
+        try {
+          await notifyFailedStep(url, message);
+        } catch {
+          // Best-effort failure notification; still return failed status to the UI.
+        }
       }
       return { status: "failed" as const, url, error: message };
     }
